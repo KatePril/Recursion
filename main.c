@@ -1,8 +1,6 @@
 #include <stdio.h>
-//(-f * (x*x) * (2*i - 1) * (2*i - 1))/(4 * (i * i) + 2 * i);
 float calculateElement(float x, float i, float prev) {
     float res = (-prev * (x*x) * (2*i - 1) * (2*i - 1))/(4 * (i * i) + 2 * i);
-//    printf(" el = %4.6lf\n", res);
     return res;
 }
 
@@ -23,8 +21,13 @@ float calculateArshMethodOne(float x, unsigned int n, unsigned int i, float prev
         output = calculateArshMethodOne(x, n - 1, i + 1, prev, sum);
     }
 
-
     return output;
+}
+
+float methodOne(float x, unsigned int n) {
+    //1 - first element index
+    //0.0f - initial sum value
+    return calculateArshMethodOne(x, n, 1, x, 0.0f);
 }
 
 struct Result {
@@ -48,15 +51,40 @@ struct Result calculateArshMethodTwo(float x, unsigned int n, float prev) {
     return r;
 }
 
-float calculateArshLoop(float x, float n) {
-//    printf("%d\n", 1);
+float methodTwo(float x, unsigned int n) {
+    return calculateArshMethodTwo(x, n, x).i;
+}
+
+
+float calculateArshMethodThree(float x, unsigned int n, unsigned int i, float prev) {
+    float sum = 0.0f;
+
+    if (n == 1) {
+        prev = calculateElement(x, i, prev);
+        sum = prev;
+    } else {
+        if (i != 1) {
+            prev = calculateElement(x, i, prev);
+        } else {
+            prev = x;
+        }
+        sum += prev + calculateArshMethodThree(x, n-1, i+1, prev);
+    }
+
+    return sum;
+}
+
+float methodThree(float x, unsigned int n) {
+    //1 - first element index
+    return calculateArshMethodThree(x, n, 1, x);
+}
+
+float methodLoop(float x, float n) {
     float sum = x;
     float prev = x;
-//    printf("i = %d, prev = %4.6lf\n", 1, prev);
+
     for (int i = 2; i <= n; ++i) {
-//        printf("%d\n", i);
         prev = calculateElement(x, i, prev);
-//        printf("i = %d, prev = %4.6lf\n", i, prev);
         sum += prev;
     }
 
@@ -67,8 +95,9 @@ float calculateArshLoop(float x, float n) {
 
 
 int main() {
-    printf("%4.6lf\n", calculateArshLoop(0.8f, 5));
-//    printf("%4.6lf", calculateArshMethodTwo(0.8f, 5, 0.8f).i);
-    printf("%4.6lf", calculateArshMethodOne(0.8f, 5, 1, 0.8f, 0.0f));
+    printf("%4.6lf\n", methodLoop(0.8f, 5));
+    printf("%4.6lf\n", methodOne(0.8f, 5));
+    printf("%4.6lf\n", methodTwo(0.8f, 5));
+    printf("%4.6lf\n", methodThree(0.8f, 5));
     return 0;
 }
