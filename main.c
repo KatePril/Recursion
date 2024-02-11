@@ -6,11 +6,31 @@ float calculateElement(float x, float i, float prev) {
     return res;
 }
 
+unsigned int calculateI(unsigned int n) {
+    return (n + 1) - n;
+}
+
+float calculateArshMethodOne(float x, unsigned int n, float prev, float p) {
+    float i = 0.0f;
+
+    if (n == 1) {
+        i = p;
+        printf("x = %4.6lf; n = %d; prev = %4.6lf; p = %4.6lf;\n", x, n, prev, p);
+    } else {
+        prev = calculateElement(x, calculateI(n), prev);
+        p += prev;
+        i = calculateArshMethodOne(x, n-1, prev, p);
+        printf("x = %4.6lf; n = %d; prev = %4.6lf; p = %4.6lf;\n", x, n, prev, p);
+    }
+
+
+    return i;
+}
+
 struct Result {
     float i;
     float prev;
 };
-
 
 struct Result calculateArshMethodTwo(float x, unsigned int n, float prev) {
     struct Result r;
@@ -48,6 +68,7 @@ float calculateArshLoop(float x, float n) {
 
 int main() {
     printf("%4.6lf\n", calculateArshLoop(0.8f, 5));
-    printf("%4.6lf", calculateArshMethodTwo(0.8f, 5, 0.8f).i);
+//    printf("%4.6lf", calculateArshMethodTwo(0.8f, 5, 0.8f).i);
+    printf("%4.6lf", calculateArshMethodOne(0.8f, 5, 0.8f, 0.0f));
     return 0;
 }
