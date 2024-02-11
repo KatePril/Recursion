@@ -7,7 +7,7 @@ float calculateElement(float x, float i, float prev) {
 }
 
 float calculateArshMethodOne(float x, unsigned int n, unsigned int i, float prev, float sum) {
-    float output = 0.0f;
+    float output;
 
     if (n == 1) {
         prev = calculateElement(x, i, prev);
