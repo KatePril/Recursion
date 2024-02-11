@@ -6,10 +6,6 @@ float calculateElement(float x, float i, float prev) {
     return res;
 }
 
-unsigned int calculateI(unsigned int n) {
-    return (n + 1) - n;
-}
-
 float calculateArshMethodOne(float x, unsigned int n, unsigned int i, float prev, float sum) {
     float output = 0.0f;
 
