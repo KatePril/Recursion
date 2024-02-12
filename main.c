@@ -1,5 +1,5 @@
 #include <stdio.h>
-float calculateElement(float x, float i, float prev) {
+float calculateElement(float x, int i, float prev) {
     float res = (-prev * (x*x) * (2*i - 1) * (2*i - 1))/(4 * (i * i) + 2 * i);
     return res;
 }
@@ -8,7 +8,11 @@ float calculateArshMethodOne(float x, unsigned int n, unsigned int i, float prev
     float output;
 
     if (n == 1) {
-        prev = calculateElement(x, i, prev);
+        if (i != 1) {
+            prev = calculateElement(x, i, prev);
+        } else {
+            prev = x;
+        }
         sum += prev;
         output = sum;
     } else {
@@ -60,7 +64,11 @@ float calculateArshMethodThree(float x, unsigned int n, unsigned int i, float pr
     float sum = 0.0f;
 
     if (n == 1) {
-        prev = calculateElement(x, i, prev);
+        if (i != 1) {
+            prev = calculateElement(x, i, prev);
+        } else {
+            prev = x;
+        }
         sum = prev;
     } else {
         if (i != 1) {
@@ -91,13 +99,15 @@ float methodLoop(float x, float n) {
     return sum;
 }
 
-
-
-
 int main() {
     printf("%4.6lf\n", methodLoop(0.8f, 5));
     printf("%4.6lf\n", methodOne(0.8f, 5));
     printf("%4.6lf\n", methodTwo(0.8f, 5));
-    printf("%4.6lf\n", methodThree(0.8f, 5));
+    printf("%4.6lf\n\n", methodThree(0.8f, 5));
+    unsigned int n = 1;
+    printf("%4.6lf\n", methodLoop(-0.7f, n));
+    printf("%4.6lf\n", methodOne(-0.7f, n));
+    printf("%4.6lf\n", methodTwo(-0.7f, n));
+    printf("%4.6lf\n", methodThree(-0.7f, n));
     return 0;
 }
