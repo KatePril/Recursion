@@ -7,21 +7,17 @@ float calculateElement(float x, int i, float prev) {
 float calculateArshMethodOne(float x, unsigned int n, unsigned int i, float prev, float sum) {
     float output;
 
+    if (i != 1) {
+        prev = calculateElement(x, i, prev);
+    } else {
+        prev = x;
+    }
+
+    sum += prev;
+
     if (n == 1) {
-        if (i != 1) {
-            prev = calculateElement(x, i, prev);
-        } else {
-            prev = x;
-        }
-        sum += prev;
         output = sum;
     } else {
-        if (i != 1) {
-            prev = calculateElement(x, i, prev);
-        } else {
-            prev = x;
-        }
-        sum += prev;
         output = calculateArshMethodOne(x, n - 1, i + 1, prev, sum);
     }
 
@@ -63,19 +59,15 @@ float methodTwo(float x, unsigned int n) {
 float calculateArshMethodThree(float x, unsigned int n, unsigned int i, float prev) {
     float sum = 0.0f;
 
+    if (i != 1) {
+        prev = calculateElement(x, i, prev);
+    } else {
+        prev = x;
+    }
+
     if (n == 1) {
-        if (i != 1) {
-            prev = calculateElement(x, i, prev);
-        } else {
-            prev = x;
-        }
         sum = prev;
     } else {
-        if (i != 1) {
-            prev = calculateElement(x, i, prev);
-        } else {
-            prev = x;
-        }
         sum += prev + calculateArshMethodThree(x, n-1, i+1, prev);
     }
 
